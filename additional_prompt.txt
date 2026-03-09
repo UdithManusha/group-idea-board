@@ -1,0 +1,11 @@
+
+
+Improve the **Group Idea Board interface** by adding a few helpful features to make the layout feel more complete and user-friendly.
+
+Add a **simple logo or idea icon** (like a lightbulb) in the header next to the title *“Group Idea Board”* to give the page a clear identity.
+
+Include a **small section that shows the total number of ideas submitted**, such as **“Total Ideas: 3”**, placed above the idea list or near the input area so users can quickly see how active the board is.
+
+Also add a **Clear button** beside the text input field so users can easily reset the idea they typed before submitting.
+
+Keep everything **clean, modern, and consistent with the existing design**, using good spacing, soft colors, rounded corners, and a responsive layout.
