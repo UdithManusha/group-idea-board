@@ -1,109 +1,39 @@
-Design a modern, responsive web application interface for a "Group Idea Board" where users can submit and view ideas collaboratively.
+Create a modern and visually appealing web interface for a small collaborative tool called “Group Idea Board.” This page should allow users to quickly add ideas and see ideas suggested by others in the group.
 
-Layout Requirements:
+The layout should feel clean, organized, and centered on the page, similar to modern productivity tools. Place everything inside a card-style container with soft shadows and rounded corners so it stands out from a light gray or subtle gradient background.
 
-Use a clean, centered card layout with soft shadows and rounded corners.
+At the top of the card, add a header section with the title “Group Idea Board.” The header can have a soft blue gradient or subtle color bar to make it visually distinct. Use a modern sans-serif font and make the title clear and bold.
 
-The card should be placed in the middle of a light neutral background (soft gray or gradient).
+Below the header, create a simple input section where users can submit new ideas. This section should contain:
 
-Include a top header section with a subtle gradient and the title "Group Idea Board" in bold modern typography.
+A dropdown menu where users can select their name (placeholder text: “Select your name…”).
 
-Input Section:
+A text input field where they can type their idea (placeholder: “Enter your idea here…”).
 
-Create a horizontal input form with the following elements:
+A clearly visible “Add Idea” button.
 
-User selection dropdown
+Arrange these elements horizontally in one row, with comfortable spacing between them. The button should look like a primary action button, preferably in a blue tone with a subtle hover effect.
 
-Placeholder: Select your name...
+Under the input area, display a list of ideas that have already been suggested. Instead of simple bullet points, show each idea in a clean list item or small card style. Each item should display:
 
-Styled modern dropdown with subtle icons.
+The idea text
 
-Idea input field
+A smaller line that says “suggested by [name]”
 
-Placeholder: Enter your idea here...
+Use good spacing, soft dividers, and subtle hover effects so the list feels interactive and easy to read.
 
-Wide text input with smooth border focus effect.
+For the overall design, aim for something that looks similar to modern SaaS dashboards or productivity apps. Keep the design minimal, balanced, and user-friendly, with consistent spacing, smooth edges, and a small amount of color for visual focus.
 
-Primary action button
+Optionally, you can enhance the interface with small touches such as:
 
-Label: Add Idea
+Hover effects for buttons and list items
 
-Rounded button with gradient color (blue/purple).
+Small user avatars next to names
 
-Include hover and click animation.
+Icons for editing or removing ideas
 
-Arrange these in a responsive flex layout with proper spacing.
+Smooth animations when a new idea is added
 
-Ideas List Section:
+A responsive layout that also works well on mobile screens
 
-Display submitted ideas in a modern list layout:
-
-Each idea appears as a card-style list item.
-
-Include:
-
-Idea text
-
-Small label: suggested by [name]
-
-Optional avatar icon beside the name.
-
-Use subtle separators or card containers instead of simple bullet points.
-
-Example:
-
-Idea Card:
-
-Bold idea title
-
-Smaller gray subtitle showing contributor
-
-Light hover highlight
-
-Visual Design Guidelines:
-
-Use modern UI style (similar to Notion, Linear, or Stripe dashboards).
-
-Soft shadows and 8–12px border radius.
-
-Consistent spacing system (8px grid).
-
-Smooth micro-interactions on hover and focus.
-
-Minimal but elegant color palette:
-
-Primary: blue / indigo
-
-Background: light gray
-
-Accent: subtle gradients
-
-Extra Enhancements:
-
-Add optional UI features:
-
-Idea vote/like button
-
-Delete/edit icon per idea
-
-Animated idea submission
-
-Empty state illustration when no ideas exist
-
-Mobile responsive design
-
-Typography:
-
-Modern sans-serif (Inter, Poppins, or SF Pro)
-
-Clear hierarchy:
-
-Title
-
-Idea text
-
-Contributor label
-
-Overall Goal:
-
-Create a professional, polished collaborative idea board interface that looks like a modern SaaS product UI with strong visual hierarchy, accessibility, and responsive design.
+The final design should feel professional, modern, and intuitive, making it easy for a group to quickly share and view ideas.
