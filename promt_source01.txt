@@ -1,1 +1,6 @@
-
+I have an existing website with a glassmorphism design (using backdrop-filter: blur, white glass backgrounds, and vibrant gradients). I need you to build the main structure for a 'Student Toolkit' that integrates with this style.
+Requirements:
+Navigation Bar: Include a glass-style navbar with a placeholder for a UCSC logo, a 'GPA Calculator' link, a 'Study Timer' link, and a 'Dark Mode' toggle switch.
+Sidebar: A sidebar titled 'Upcoming Events'. Use the same glass effect. Animation: When hovering over items in the sidebar, they must glow and expand slightly.
+Animations: All sections should have a smooth fade-in animation on load.
+Formatting: Use the exact same CSS variable system and 'Outfit' font as my Dream Board code. Keep the layout clean and modern.
