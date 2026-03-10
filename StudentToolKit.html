@@ -10,9 +10,10 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
         :root {
-            --primary: #c41230;
-            --primary-dark: #8b0d22;
-            --accent: #f1c40f;
+            /* Updated UCSC Branding: Maroon & Gold */
+            --primary: #800000; /* Deep Maroon */
+            --primary-dark: #5a0000;
+            --accent: #FFD700; /* Gold */
             --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             --glass-bg: rgba(255, 255, 255, 0.85);
             --glass-border: rgba(255, 255, 255, 0.6);
@@ -20,7 +21,7 @@
             --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
             --text-main: #2d3436;
             --radius: 16px;
-            --transition: all 0.3s ease;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         * {
@@ -37,8 +38,30 @@
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
-            transition: var(--transition);
+            transition: background 0.5s ease;
         }
+
+        /* --- Animations --- */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-section {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.3s; }
+        .delay-3 { animation-delay: 0.5s; }
+        .delay-4 { animation-delay: 0.7s; }
 
         /* --- Dark Mode Styles --- */
         body.dark-mode {
@@ -54,7 +77,7 @@
 
         .dark-mode .section-title {
             color: var(--accent);
-            border-bottom-color: rgba(241, 196, 15, 0.2);
+            border-bottom-color: rgba(255, 215, 0, 0.2);
         }
 
         .dark-mode .event-item, 
@@ -79,16 +102,16 @@
         /* --- Creative Navbar --- */
         .navbar {
             background: linear-gradient(to right, var(--primary), var(--primary-dark));
-            padding: 1rem 2rem;
+            padding: 0.8rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 20px rgba(196, 18, 48, 0.3);
+            box-shadow: 0 4px 20px rgba(128, 0, 0, 0.3);
             backdrop-filter: blur(10px);
-            transition: var(--transition);
+            transition: background 0.5s ease;
         }
 
         .logo {
@@ -97,7 +120,16 @@
             color: white;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.8rem;
+        }
+
+        .logo img {
+            height: 40px;
+            width: 40px;
+            border-radius: 8px;
+            background: white;
+            padding: 2px;
+            object-fit: contain;
         }
 
         .nav-right {
@@ -124,7 +156,7 @@
         }
 
         .nav-links a:hover {
-            color: white;
+            color: var(--accent);
             transform: translateY(-2px);
         }
 
@@ -209,11 +241,11 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            border-bottom: 2px solid rgba(196, 18, 48, 0.1);
+            border-bottom: 2px solid rgba(128, 0, 0, 0.1);
             padding-bottom: 0.5rem;
         }
 
-        /* --- Sidebar Events --- */
+        /* --- Interactive Sidebar --- */
         .sidebar {
             position: sticky;
             top: 6rem;
@@ -227,7 +259,14 @@
             margin-bottom: 1rem;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            transition: transform 0.2s, background 0.3s;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .event-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(255, 215, 0, 0.2), 0 0 10px rgba(255, 215, 0, 0.1);
+            border-left-width: 8px;
         }
 
         .event-date {
@@ -281,7 +320,7 @@
             transition: transform 0.2s;
         }
 
-        .btn-add:hover { transform: rotate(90deg) scale(1.1); }
+        .btn-add:hover { transform: rotate(90deg) scale(1.1); background: var(--primary-dark); }
 
         .sticky-note {
             padding: 1.5rem;
@@ -293,7 +332,7 @@
             box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
             position: relative;
             transition: transform 0.3s;
-            color: #2d3436; /* Always dark text for contrast on yellow/pink notes */
+            color: #2d3436;
         }
         
         .sticky-note:hover { transform: scale(1.05) rotate(1deg); z-index: 10; }
@@ -372,6 +411,7 @@
         }
 
         .btn-start { background: var(--primary); color: white; }
+        .btn-start:hover { background: var(--primary-dark); }
         .btn-pause { background: #f39c12; color: white; }
         .btn-reset { background: #95a5a6; color: white; }
         
@@ -437,7 +477,7 @@
 
     <nav class="navbar">
         <div class="logo">
-            <i class="ph ph-student"></i>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjh8HCAzjZbfXikaInHueqXzhxl9UzKtQhWw&s" alt="UCSC Logo">
             UCSC Hub
         </div>
         <div class="nav-right">
@@ -459,7 +499,7 @@
 
     <div class="container">
         <!-- Sidebar -->
-        <aside class="sidebar">
+        <aside class="sidebar fade-in-section delay-1">
             <div class="card">
                 <h3 class="section-title"><i class="ph ph-calendar-check"></i> Deadlines</h3>
                 <div class="event-item">
@@ -472,6 +512,11 @@
                     <h4>Math 203 Midterm</h4>
                     <p style="font-size: 0.85rem; color: #666;">Engineering Bldg, Rm 402</p>
                 </div>
+                <div class="event-item">
+                    <div class="event-date">Mar 22, 11:59 PM</div>
+                    <h4>Ethics Paper</h4>
+                    <p style="font-size: 0.85rem; color: #666;">Turnitin Submission</p>
+                </div>
             </div>
         </aside>
 
@@ -479,7 +524,7 @@
         <main class="main-content" style="display: flex; flex-direction: column; gap: 2rem;">
             
             <!-- Idea Board -->
-            <section id="ideas" class="card">
+            <section id="ideas" class="card fade-in-section delay-2">
                 <h2 class="section-title"><i class="ph ph-push-pin"></i> Idea Board</h2>
                 <div class="input-area">
                     <input type="text" id="ideaInput" placeholder="Brainstorm a new idea...">
@@ -497,7 +542,7 @@
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
                 
                 <!-- Study Timer -->
-                <section id="timer" class="card">
+                <section id="timer" class="card fade-in-section delay-3">
                     <h2 class="section-title"><i class="ph ph-hourglass"></i> Focus Timer</h2>
                     <div class="timer-container">
                         <div class="timer-circle">
@@ -513,7 +558,7 @@
                 </section>
 
                 <!-- GPA Calculator -->
-                <section id="gpa" class="card">
+                <section id="gpa" class="card fade-in-section delay-4">
                     <h2 class="section-title"><i class="ph ph-calculator"></i> Quick GPA</h2>
                     <table class="gpa-table" id="courseTable">
                         <thead>
