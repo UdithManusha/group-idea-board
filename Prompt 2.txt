@@ -1,0 +1,98 @@
+You are a professional front-end developer.
+
+Extend the existing "UCSC Hub - Student Toolkit" HTML dashboard. 
+The current design already uses a modern glassmorphism UI with Poppins font, Phosphor icons, colorful cards, soft shadows, and smooth animations.
+
+Your task is to ADD new interactive features using HTML, CSS, and JavaScript while keeping the SAME design language.
+
+Design requirements:
+- Creative
+- Colorful but professional
+- Youthful student-friendly UI
+- Easy accessibility and readable typography
+- Responsive layout
+- Smooth animations and hover effects
+- Maintain the glassmorphism card style
+- Use the same color palette (primary red, accent yellow, soft backgrounds)
+- Keep the dashboard consistent with the existing components
+
+Add the following features:
+
+----------------------------------
+
+1. ADVANCED GPA CALCULATOR
+
+Create a dedicated "GPA Calculator" card inside the dashboard.
+
+Features:
+- Input field for Course Name
+- Input field for Credits
+- Dropdown for Grade (A, B, C, D, F)
+- Button to add additional course rows dynamically
+- A "Calculate GPA" button
+
+Functionality:
+- When the Calculate button is clicked:
+    - Multiply credits × grade points
+    - Compute the weighted GPA
+    - Display the final GPA clearly in a styled result box
+- Apply color feedback:
+    - Green for GPA ≥ 3.5
+    - Orange for GPA between 2.5 – 3.49
+    - Red for GPA < 2.5
+- Animate the result display.
+
+----------------------------------
+
+2. POMODORO STUDY TIMER
+
+Add a "Focus Timer" or "Pomodoro Timer" card.
+
+Requirements:
+- Default countdown: 25 minutes
+- Circular or modern styled timer display
+- Buttons:
+    - Start
+    - Pause
+    - Reset
+
+Functionality:
+- Start begins countdown
+- Pause stops temporarily
+- Reset returns timer to 25:00
+- When the timer reaches 0:
+    - Play a bell sound
+    - Show a notification or alert: "Pomodoro Complete! Take a break."
+- Optional visual progress animation around the timer circle.
+
+----------------------------------
+
+3. DARK MODE TOGGLE
+
+Add a Dark Mode toggle switch to the navigation bar.
+
+UI Requirements:
+- Use a modern toggle switch with moon/sun icon.
+- Smooth transition animation.
+
+Functionality:
+- When Dark Mode is enabled:
+    - Background becomes dark grey or black
+    - Cards become darker glassmorphism panels
+    - Text switches to light colors
+    - Maintain accent colors
+- When toggled again, switch back to Light Mode.
+
+Extra UX improvement:
+- Save the user's preference using localStorage so the selected mode stays after page refresh.
+
+----------------------------------
+
+Coding requirements:
+- Use clean, well-commented JavaScript.
+- Keep CSS organized using variables.
+- Ensure responsive layout for mobile screens.
+- Maintain visual consistency with the existing UCSC Hub style.
+
+Output:
+Provide the complete additional HTML, CSS, and JavaScript code needed to integrate these features into the existing dashboard.
