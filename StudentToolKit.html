@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCSC Hub - Student Toolkit</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            --primary: #c41230;
+            --primary-dark: #8b0d22;
+            --accent: #f1c40f;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --text-main: #2d3436;
+            --radius: 16px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            transition: var(--transition);
+        }
+
+        /* --- Dark Mode Styles --- */
+        body.dark-mode {
+            background: #121212;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .card {
+            background: #1e1e1e;
+            border-color: #333;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .section-title {
+            color: var(--accent);
+            border-bottom-color: rgba(241, 196, 15, 0.2);
+        }
+
+        .dark-mode .event-item, 
+        .dark-mode .gpa-row, 
+        .dark-mode .input-area, 
+        .dark-mode .gpa-input, 
+        .dark-mode .timer-circle {
+            background: #2d2d2d;
+            color: white;
+            border-color: #444;
+        }
+
+        .dark-mode .navbar {
+            background: #000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .dark-mode .event-item h4 { color: white; }
+        .dark-mode .event-item p { color: #aaa !important; }
+        .dark-mode .nav-links { background: rgba(255,255,255,0.05); }
+
+        /* --- Creative Navbar --- */
+        .navbar {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(196, 18, 48, 0.3);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* --- Theme Toggle --- */
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .theme-switch {
+            display: inline-block;
+            height: 24px;
+            position: relative;
+            width: 48px;
+        }
+
+        .theme-switch input { display: none; }
+
+        .slider {
+            background-color: rgba(255,255,255,0.3);
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 16px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 16px;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider { background-color: var(--accent); }
+        input:checked + .slider:before { transform: translateX(24px); }
+
+        /* --- Layout --- */
+        .container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            width: 100%;
+            flex: 1;
+        }
+
+        /* --- Glassmorphism Cards --- */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 2px solid rgba(196, 18, 48, 0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        /* --- Sidebar Events --- */
+        .sidebar {
+            position: sticky;
+            top: 6rem;
+            height: fit-content;
+        }
+
+        .event-item {
+            background: white;
+            border-left: 4px solid var(--accent);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .event-date {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- Sticky Note Idea Board --- */
+        .idea-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+            background: white;
+            padding: 0.5rem;
+            border-radius: 50px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+            transition: background 0.3s;
+        }
+
+        .input-area input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-family: inherit;
+            outline: none;
+            color: inherit;
+        }
+
+        .btn-add {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+
+        .btn-add:hover { transform: rotate(90deg) scale(1.1); }
+
+        .sticky-note {
+            padding: 1.5rem;
+            border-radius: 2px 2px 16px 2px;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
+            position: relative;
+            transition: transform 0.3s;
+            color: #2d3436; /* Always dark text for contrast on yellow/pink notes */
+        }
+        
+        .sticky-note:hover { transform: scale(1.05) rotate(1deg); z-index: 10; }
+
+        .delete-note {
+            align-self: flex-end;
+            background: rgba(0,0,0,0.1);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .note-color-1 { background: #ffeba1; transform: rotate(-2deg); }
+        .note-color-2 { background: #c5fcd6; transform: rotate(1deg); }
+        .note-color-3 { background: #ffc2d4; transform: rotate(3deg); }
+        .note-color-4 { background: #e0daff; transform: rotate(-1deg); }
+
+        /* --- Circular Study Timer --- */
+        .timer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .timer-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 8px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            position: relative;
+            background: white;
+            box-shadow: inset 0 4px 10px rgba(0,0,0,0.05);
+            transition: background 0.3s, border-color 0.3s;
+        }
+        
+        .timer-progress {
+            position: absolute;
+            top: -8px; left: -8px; right: -8px; bottom: -8px;
+            border-radius: 50%;
+            border: 8px solid transparent;
+            border-top-color: var(--primary);
+            transform: rotate(0deg);
+            transition: transform 1s linear;
+        }
+
+        .timer-controls {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-control {
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.2s;
+        }
+
+        .btn-start { background: var(--primary); color: white; }
+        .btn-pause { background: #f39c12; color: white; }
+        .btn-reset { background: #95a5a6; color: white; }
+        
+        /* --- GPA Calculator --- */
+        .gpa-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 0.5rem;
+        }
+
+        .gpa-table th {
+            text-align: left;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            padding: 0 1rem;
+        }
+
+        .gpa-row {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: background 0.3s;
+        }
+        
+        .gpa-row td { padding: 0.8rem 1rem; }
+        .gpa-row td:first-child { border-radius: 8px 0 0 8px; }
+        .gpa-row td:last-child { border-radius: 0 8px 8px 0; }
+
+        .gpa-input {
+            border: 1px solid #eee;
+            background: transparent;
+            padding: 0.5rem;
+            border-radius: 6px;
+            width: 100%;
+            color: inherit;
+        }
+
+        .gpa-result {
+            margin-top: 1rem;
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            border-radius: var(--radius);
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: none;
+            animation: popIn 0.3s ease;
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; }
+            .sidebar { position: static; margin-bottom: 2rem; }
+            .nav-right { flex-direction: column; gap: 1rem; align-items: flex-end; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <i class="ph ph-student"></i>
+            UCSC Hub
+        </div>
+        <div class="nav-right">
+            <div class="nav-links">
+                <a href="#ideas"><i class="ph ph-lightbulb"></i> Ideas</a>
+                <a href="#timer"><i class="ph ph-timer"></i> Timer</a>
+                <a href="#gpa"><i class="ph ph-calculator"></i> GPA</a>
+            </div>
+            <div class="theme-switch-wrapper">
+                <i class="ph ph-sun"></i>
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" onchange="toggleDarkMode()">
+                    <div class="slider"></div>
+                </label>
+                <i class="ph ph-moon"></i>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="card">
+                <h3 class="section-title"><i class="ph ph-calendar-check"></i> Deadlines</h3>
+                <div class="event-item">
+                    <div class="event-date">Tomorrow, 11:59 PM</div>
+                    <h4>CS101: Algorithm Analysis</h4>
+                    <p style="font-size: 0.85rem; color: #666;">Submit via Canvas</p>
+                </div>
+                <div class="event-item">
+                    <div class="event-date">Mar 18, 10:00 AM</div>
+                    <h4>Math 203 Midterm</h4>
+                    <p style="font-size: 0.85rem; color: #666;">Engineering Bldg, Rm 402</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content" style="display: flex; flex-direction: column; gap: 2rem;">
+            
+            <!-- Idea Board -->
+            <section id="ideas" class="card">
+                <h2 class="section-title"><i class="ph ph-push-pin"></i> Idea Board</h2>
+                <div class="input-area">
+                    <input type="text" id="ideaInput" placeholder="Brainstorm a new idea...">
+                    <button class="btn-add" onclick="addIdea()"><i class="ph ph-plus-bold"></i></button>
+                </div>
+                
+                <div id="ideaGrid" class="idea-grid">
+                    <div class="sticky-note note-color-1">
+                        <p>Research improved sorting algorithms for the final project.</p>
+                        <button class="delete-note" onclick="this.parentElement.remove()"><i class="ph ph-trash"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                
+                <!-- Study Timer -->
+                <section id="timer" class="card">
+                    <h2 class="section-title"><i class="ph ph-hourglass"></i> Focus Timer</h2>
+                    <div class="timer-container">
+                        <div class="timer-circle">
+                            <span id="timerDisplay">25:00</span>
+                            <div class="timer-progress" id="timerLoader"></div>
+                        </div>
+                        <div class="timer-controls">
+                            <button class="btn-control btn-start" onclick="startTimer()"><i class="ph ph-play"></i> Start</button>
+                            <button class="btn-control btn-pause" onclick="pauseTimer()"><i class="ph ph-pause"></i> Pause</button>
+                            <button class="btn-control btn-reset" onclick="resetTimer()"><i class="ph ph-arrow-counter-clockwise"></i></button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- GPA Calculator -->
+                <section id="gpa" class="card">
+                    <h2 class="section-title"><i class="ph ph-calculator"></i> Quick GPA</h2>
+                    <table class="gpa-table" id="courseTable">
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>Credits</th>
+                                <th>Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="gpa-row">
+                                <td><input type="text" class="gpa-input" placeholder="e.g. CS101"></td>
+                                <td><input type="number" class="gpa-input credit" value="3"></td>
+                                <td>
+                                    <select class="gpa-input grade">
+                                        <option value="4.0">A</option>
+                                        <option value="3.0">B</option>
+                                        <option value="2.0">C</option>
+                                        <option value="1.0">D</option>
+                                        <option value="0.0">F</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-top: 1rem; display: flex; gap: 10px;">
+                        <button class="btn-control" style="background: #eee; color: #333;" onclick="addCourseRow()">+ Course</button>
+                        <button class="btn-control btn-start" onclick="calculateGPA()">Calculate</button>
+                    </div>
+                    <div id="gpaResult" class="gpa-result">
+                        GPA: 0.00
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // --- Dark Mode Logic ---
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        // --- Idea Board Logic ---
+        const colors = ['note-color-1', 'note-color-2', 'note-color-3', 'note-color-4'];
+
+        function addIdea() {
+            const input = document.getElementById('ideaInput');
+            const grid = document.getElementById('ideaGrid');
+            if (input.value.trim() !== "") {
+                const div = document.createElement('div');
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                const rotation = Math.floor(Math.random() * 6) - 3; 
+                div.className = `sticky-note ${randomColor}`;
+                div.style.transform = `rotate(${rotation}deg)`;
+                div.innerHTML = `
+                    <p>${input.value}</p>
+                    <button class="delete-note" onclick="this.parentElement.remove()"><i class="ph ph-trash"></i></button>
+                `;
+                div.onmouseenter = function() { this.style.transform = 'scale(1.05) rotate(0deg)'; }
+                div.onmouseleave = function() { this.style.transform = `rotate(${rotation}deg)`; }
+                grid.insertBefore(div, grid.firstChild);
+                input.value = "";
+            }
+        }
+
+        // --- Timer Logic ---
+        let totalTime = 25 * 60;
+        let timeLeft = totalTime;
+        let timerId = null;
+
+        function updateDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const display = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('timerDisplay').textContent = display;
+            const percentage = ((totalTime - timeLeft) / totalTime) * 360;
+            document.getElementById('timerLoader').style.transform = `rotate(${percentage}deg)`;
+        }
+
+        function startTimer() {
+            if (timerId) return;
+            timerId = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateDisplay();
+                } else {
+                    clearInterval(timerId);
+                    timerId = null;
+                    alert("Pomodoro session completed!");
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() { clearInterval(timerId); timerId = null; }
+        
+        function resetTimer() {
+            pauseTimer();
+            timeLeft = totalTime;
+            updateDisplay();
+            document.getElementById('timerLoader').style.transform = `rotate(0deg)`;
+        }
+
+        // --- GPA Calculator Logic ---
+        function addCourseRow() {
+            const tbody = document.querySelector('#courseTable tbody');
+            const row = document.createElement('tr');
+            row.className = 'gpa-row';
+            row.innerHTML = `
+                <td><input type="text" class="gpa-input" placeholder="Course"></td>
+                <td><input type="number" class="gpa-input credit" value="3"></td>
+                <td>
+                    <select class="gpa-input grade">
+                        <option value="4.0">A</option>
+                        <option value="3.0">B</option>
+                        <option value="2.0">C</option>
+                        <option value="1.0">D</option>
+                        <option value="0.0">F</option>
+                    </select>
+                </td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        function calculateGPA() {
+            const rows = document.querySelectorAll('.gpa-row');
+            let totalPoints = 0;
+            let totalCredits = 0;
+            rows.forEach(row => {
+                const credit = parseFloat(row.querySelector('.credit').value) || 0;
+                const grade = parseFloat(row.querySelector('.grade').value) || 0;
+                totalPoints += (credit * grade);
+                totalCredits += credit;
+            });
+            const gpa = totalCredits === 0 ? 0 : (totalPoints / totalCredits).toFixed(2);
+            const resultDiv = document.getElementById('gpaResult');
+            resultDiv.style.display = 'block';
+            resultDiv.textContent = `GPA: ${gpa}`;
+            if(gpa >= 3.5) resultDiv.style.background = '#27ae60';
+            else if(gpa >= 2.5) resultDiv.style.background = '#f39c12';
+            else resultDiv.style.background = '#c0392b';
+        }
+    </script>
+</body>
+</html>
