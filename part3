@@ -1,0 +1,23 @@
+I already have a working HTML dashboard project called “UCSC Hub – Student Toolkit”. The project is built in a single HTML file with embedded CSS and JavaScript. All existing features such as the Idea Board, Focus Timer, GPA Calculator, and Sidebar must continue to work exactly the same.
+I want you to update the existing code to complete the following requirement: “Part 3 – Aesthetic Polishing & Interaction”.
+Please modify the code and enhance the UI with these changes:
+1. Animations
+Add smooth fade-in animations so that the main sections of the page (sidebar, idea board, timer section, and GPA calculator) gradually appear when the page loads. Use modern CSS animations or transitions so the appearance feels smooth and professional.
+2. Interactive Sidebar
+Improve the “Upcoming Events / Deadlines” sidebar interaction.
+When the user hovers over an event item:
+- The item should glow with a soft shadow.
+- The item should expand slightly using a scale transform.
+- The hover effect should animate smoothly.
+3. University Branding
+Update the visual theme to better match UCSC branding colors:
+- Primary color: Maroon
+- Accent color: Gold
+Apply these colors consistently to important UI elements such as buttons, highlights, titles, borders, and interactive components.
+4. UCSC Logo
+Add a placeholder image for the UCSC logo in the navigation bar next to the “UCSC Hub” title. Use an <img> tag with a placeholder logo and style it so it fits nicely inside the navbar.
+Important:
+- Do not remove or break any existing functionality.
+- Only improve styling, animation, and visual interaction.
+- Keep the design clean, modern, and responsive.
+- Return the full updated HTML file with the improvements applied.
