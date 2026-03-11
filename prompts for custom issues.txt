@@ -1,0 +1,78 @@
+I built a Student Toolkit web application using HTML, CSS, and JavaScript. 
+It includes three main features:
+
+1. Idea Board
+2. Focus Timer
+3. GPA Calculator
+
+The UI and design are already working well, so I do NOT want the design changed. 
+I only want improvements to the JavaScript logic and small HTML adjustments where necessary.
+
+Below are several issues that need to be fixed.
+
+-----------------------------------
+Issue 1 – GPA can be calculated without course names
+-----------------------------------
+Currently the GPA calculator allows calculation even when the course name field is empty.
+
+Expected behavior:
+• Each row must have a course name before GPA can be calculated.
+• If a course name is empty, highlight that input field and prevent calculation.
+• Show a message like "Please enter course names."
+
+-----------------------------------
+Issue 2 – Credits have no limits
+-----------------------------------
+Currently users can enter any number of credits.
+
+Expected behavior:
+• Credits should only allow reasonable values (for example 1–6).
+• Prevent negative numbers or extremely large numbers.
+• If the value is invalid, show an error or automatically clamp it to the valid range.
+
+-----------------------------------
+Issue 3 – GPA calculator cannot be reset
+-----------------------------------
+After calculating GPA, there is no way to clear the inputs and use the calculator again easily.
+
+Expected behavior:
+• Add a "Reset" button for the GPA calculator.
+• Reset should:
+  - Clear course names
+  - Reset credits to default (3)
+  - Reset grades to default (A)
+  - Hide the GPA result section
+
+-----------------------------------
+Issue 4 – Wrong courses cannot be deleted
+-----------------------------------
+Currently the user cannot remove a course row if they added a wrong course.
+
+Expected behavior:
+• Add a delete/remove button for each course row.
+• When clicked, that row should be removed.
+• GPA should still calculate correctly with the remaining rows.
+
+-----------------------------------
+Issue 5 – Pressing Enter does not add ideas
+-----------------------------------
+In the Idea Board, users must click the "+" button to add an idea.
+
+Expected behavior:
+• Pressing the Enter key while typing in the idea input should also add the idea.
+• It should trigger the same addIdea() function used by the button.
+• Keep duplicate checking and validation exactly as it already works.
+
+-----------------------------------
+
+Important requirements:
+
+• Do NOT change the UI design or layout.
+• Do NOT remove existing functionality.
+• Only improve logic and add small UI controls where necessary.
+• Keep the code clean and readable.
+• Return the updated code sections with explanations.
+
+I will provide my full HTML, CSS, and JavaScript code below.
+
+[PASTE MY FULL CODE HERE]
