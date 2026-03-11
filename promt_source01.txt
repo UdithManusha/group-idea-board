@@ -1,6 +1,6 @@
-I have an existing website with a glassmorphism design (using backdrop-filter: blur, white glass backgrounds, and vibrant gradients). I need you to build the main structure for a 'Student Toolkit' that integrates with this style.
-Requirements:
-Navigation Bar: Include a glass-style navbar with a placeholder for a UCSC logo, a 'GPA Calculator' link, a 'Study Timer' link, and a 'Dark Mode' toggle switch.
-Sidebar: A sidebar titled 'Upcoming Events'. Use the same glass effect. Animation: When hovering over items in the sidebar, they must glow and expand slightly.
-Animations: All sections should have a smooth fade-in animation on load.
-Formatting: Use the exact same CSS variable system and 'Outfit' font as my Dream Board code. Keep the layout clean and modern.
+Day 05 - prompt for idea length limitation:
+Please update the 'Idea Board' logic in my UCSC Hub code to include a maximum character limit for new ideas. Specifically:
+Input Constraint: Set a default limit of 200 characters for the ideaInput field using the maxlength attribute.
+Visual Feedback: Add a small character counter below the input area that updates in real-time (e.g., '0 / 200') and turns red when the limit is reached.
+CSS Protection: Update the .sticky-note styles to handle overflow gracefully. Ensure that if a user bypasses the limit or enters long strings, the text wraps correctly using overflow-wrap: break-word and the note stays a consistent size with overflow-y: auto.
+Graceful Handling: If someone tries to add an empty idea or just spaces, show a subtle border-color change to red on the input field instead of a browser alert.
