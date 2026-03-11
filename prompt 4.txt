@@ -1,0 +1,506 @@
+I built a Student Toolkit web application using HTML, CSS, and JavaScript. 
+One feature is an Idea Board where users can add ideas as sticky notes.
+
+Problem:
+Currently the system inserts user input using innerHTML when creating the sticky note. 
+Because of this, if a user enters HTML or JavaScript code such as:
+
+<b>Important</b>
+<script>alert("Hello")</script>
+
+the browser interprets it as actual HTML or script instead of plain text.
+
+What I want:
+The system should treat all user input as plain text and NOT execute or render HTML tags.
+
+Requirements:
+1. If a user enters HTML tags like <b>Important</b>, it should display exactly as text, not bold formatting.
+2. If someone enters script tags like <script>alert("Hello")</script>, the script must never run.
+3. Prevent any XSS security issues.
+4. Keep the existing UI design exactly the same.
+5. Only modify the JavaScript logic inside the addIdea() function.
+
+Suggested approach:
+Instead of using innerHTML to insert user input, use safer methods such as textContent or createTextNode.
+
+I will provide my full HTML, CSS, and JavaScript code below. 
+Please update only the necessary parts and return the corrected code.
+
+[<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCSC Hub - Student Toolkit</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+<style>
+
+:root{
+--primary:#800000;
+--primary-dark:#5a0000;
+--accent:#FFD700;
+--bg-gradient:linear-gradient(135deg,#f5f7fa 0%,#c3cfe2 100%);
+--glass-bg:rgba(255,255,255,0.85);
+--glass-border:rgba(255,255,255,0.6);
+--radius:16px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+body{
+font-family:'Poppins',sans-serif;
+background:var(--bg-gradient);
+min-height:100vh;
+}
+
+.navbar{
+background:linear-gradient(to right,var(--primary),var(--primary-dark));
+padding:1rem 2rem;
+display:flex;
+justify-content:space-between;
+align-items:center;
+color:white;
+}
+
+.logo{
+font-size:1.4rem;
+font-weight:700;
+display:flex;
+gap:10px;
+align-items:center;
+}
+
+.logo img{
+width:38px;
+height:38px;
+border-radius:6px;
+background:white;
+}
+
+.nav-links{
+display:flex;
+gap:1.2rem;
+}
+
+.nav-links a{
+color:white;
+text-decoration:none;
+font-weight:600;
+cursor:pointer;
+}
+
+.container{
+display:grid;
+grid-template-columns:280px 1fr;
+gap:2rem;
+max-width:1300px;
+margin:2rem auto;
+padding:0 2rem;
+}
+
+.card{
+background:var(--glass-bg);
+padding:1.5rem;
+border-radius:var(--radius);
+}
+
+.section-title{
+font-size:1.2rem;
+margin-bottom:1.3rem;
+color:var(--primary);
+display:flex;
+gap:8px;
+align-items:center;
+}
+
+.page-section{display:none;}
+.page-section.active{display:block;}
+
+.sidebar .event-item{
+background:white;
+padding:1rem;
+margin-bottom:1rem;
+border-left:4px solid var(--accent);
+border-radius:8px;
+}
+
+.event-date{
+font-size:.75rem;
+color:var(--primary);
+font-weight:700;
+}
+
+.idea-grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+gap:1.5rem;
+margin-top:1.5rem;
+}
+
+.input-area{
+display:flex;
+gap:10px;
+background:white;
+padding:.5rem;
+border-radius:40px;
+}
+
+.input-area input{
+flex:1;
+border:none;
+outline:none;
+padding:.7rem 1rem;
+font-family:inherit;
+}
+
+.input-error{
+border:2px solid #c0392b !important;
+}
+
+.char-counter{
+font-size:.8rem;
+margin-top:6px;
+text-align:right;
+color:#666;
+}
+
+.char-counter.limit{
+color:#c0392b;
+font-weight:600;
+}
+
+.btn-add{
+background:var(--primary);
+border:none;
+width:42px;
+height:42px;
+border-radius:50%;
+color:white;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.sticky-note{
+padding:1.5rem;
+border-radius:2px 2px 16px 2px;
+min-height:180px;
+max-height:200px;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+box-shadow:2px 4px 8px rgba(0,0,0,0.1);
+overflow-y:auto;
+overflow-wrap:break-word;
+word-break:break-word;
+}
+
+.note-color-1{background:#ffeba1;}
+.note-color-2{background:#c5fcd6;}
+.note-color-3{background:#ffc2d4;}
+.note-color-4{background:#e0daff;}
+
+.delete-note{
+align-self:flex-end;
+border:none;
+background:rgba(0,0,0,0.1);
+width:28px;
+height:28px;
+border-radius:50%;
+cursor:pointer;
+}
+
+.timer-circle{
+width:200px;
+height:200px;
+border-radius:50%;
+border:8px solid #eee;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:3rem;
+font-family:'Space Mono',monospace;
+margin:auto;
+}
+
+.timer-controls{
+display:flex;
+justify-content:center;
+gap:1rem;
+margin-top:1.5rem;
+}
+
+.btn-control{
+padding:.6rem 1.4rem;
+border:none;
+border-radius:30px;
+cursor:pointer;
+}
+
+.btn-start{background:#800000;color:white;}
+.btn-pause{background:#f39c12;color:white;}
+.btn-reset{background:#95a5a6;color:white;}
+
+.gpa-table{width:100%;margin-top:1rem;}
+.gpa-input{padding:.5rem;width:100%;}
+.gpa-result{
+margin-top:1.5rem;
+background:var(--primary);
+color:white;
+padding:1rem;
+text-align:center;
+border-radius:12px;
+display:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="logo">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjh8HCAzjZbfXikaInHueqXzhxl9UzKtQhWw&s">
+UCSC Hub
+</div>
+
+<div class="nav-links">
+<a onclick="showSection('ideas')">Ideas</a>
+<a onclick="showSection('timer')">Timer</a>
+<a onclick="showSection('gpa')">GPA</a>
+</div>
+</nav>
+
+<div class="container">
+
+<aside class="sidebar">
+<div class="card">
+
+<h3 class="section-title">Deadlines</h3>
+
+<div class="event-item">
+<div class="event-date">Tomorrow</div>
+CS101 Assignment
+</div>
+
+<div class="event-item">
+<div class="event-date">Mar 18</div>
+Math Midterm
+</div>
+
+</div>
+</aside>
+
+<main>
+
+<section id="ideas" class="page-section card">
+
+<h2 class="section-title">Idea Board</h2>
+
+<div class="input-area">
+<input type="text" id="ideaInput" maxlength="200" placeholder="Brainstorm a new idea..." oninput="updateCounter()">
+<button class="btn-add" onclick="addIdea()">
+<i class="ph ph-plus-bold"></i>
+</button>
+</div>
+
+<div id="charCounter" class="char-counter">0 / 200</div>
+
+<div id="ideaGrid" class="idea-grid"></div>
+
+</section>
+
+
+<section id="timer" class="page-section card">
+
+<h2 class="section-title">Focus Timer</h2>
+
+<div class="timer-circle">
+<span id="timerDisplay">25:00</span>
+</div>
+
+<div class="timer-controls">
+<button class="btn-control btn-start" onclick="startTimer()">Start</button>
+<button class="btn-control btn-pause" onclick="pauseTimer()">Pause</button>
+<button class="btn-control btn-reset" onclick="resetTimer()">Reset</button>
+</div>
+
+</section>
+
+
+<section id="gpa" class="page-section card">
+
+<h2 class="section-title">Quick GPA</h2>
+
+<table class="gpa-table" id="courseTable">
+
+<tr>
+<td><input class="gpa-input" placeholder="Course"></td>
+<td><input type="number" class="gpa-input credit" value="3"></td>
+<td>
+<select class="gpa-input grade">
+<option value="4">A</option>
+<option value="3">B</option>
+<option value="2">C</option>
+<option value="1">D</option>
+<option value="0">F</option>
+</select>
+</td>
+</tr>
+
+</table>
+
+<button class="btn-control btn-start" onclick="calculateGPA()">Calculate</button>
+
+<div id="gpaResult" class="gpa-result">GPA: 0</div>
+
+</section>
+
+</main>
+</div>
+
+<script>
+
+function showSection(id){
+document.querySelectorAll('.page-section').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+}
+
+window.onload=()=>showSection('ideas');
+
+const colors=['note-color-1','note-color-2','note-color-3','note-color-4'];
+
+function updateCounter(){
+
+const input=document.getElementById("ideaInput");
+const counter=document.getElementById("charCounter");
+
+const length=input.value.length;
+
+counter.textContent=length+" / 200";
+
+if(length>=200){
+counter.classList.add("limit");
+}else{
+counter.classList.remove("limit");
+}
+
+input.classList.remove("input-error");
+}
+
+function addIdea(){
+
+const input=document.getElementById("ideaInput");
+const grid=document.getElementById("ideaGrid");
+
+const text=input.value.trim().toLowerCase();
+
+if(text===""){
+input.classList.add("input-error");
+return;
+}
+
+const existing=document.querySelectorAll("#ideaGrid .sticky-note p");
+
+for(let idea of existing){
+if(idea.textContent.trim().toLowerCase()===text){
+input.classList.add("input-error");
+return;
+}
+}
+
+const div=document.createElement("div");
+
+const randomColor=colors[Math.floor(Math.random()*colors.length)];
+
+div.className="sticky-note "+randomColor;
+
+div.innerHTML=
+`
+<p>${input.value}</p>
+<button class="delete-note" onclick="this.parentElement.remove()">
+<i class="ph ph-trash"></i>
+</button>
+`;
+
+grid.prepend(div);
+
+input.value="";
+updateCounter();
+
+}
+
+let totalTime=1500;
+let timeLeft=totalTime;
+let timer=null;
+
+function updateDisplay(){
+
+let m=Math.floor(timeLeft/60);
+let s=timeLeft%60;
+
+document.getElementById("timerDisplay").textContent=
+String(m).padStart(2,'0')+":"+String(s).padStart(2,'0');
+
+}
+
+function startTimer(){
+if(timer)return;
+
+timer=setInterval(()=>{
+
+if(timeLeft>0){
+timeLeft--;
+updateDisplay();
+}else{
+clearInterval(timer);
+timer=null;
+alert("Session Completed!");
+}
+
+},1000);
+}
+
+function pauseTimer(){
+clearInterval(timer);
+timer=null;
+}
+
+function resetTimer(){
+pauseTimer();
+timeLeft=totalTime;
+updateDisplay();
+}
+
+function calculateGPA(){
+
+let pts=0;
+let crd=0;
+
+document.querySelectorAll("#courseTable tr").forEach(row=>{
+
+let c=parseFloat(row.querySelector(".credit")?.value)||0;
+let g=parseFloat(row.querySelector(".grade")?.value)||0;
+
+pts+=c*g;
+crd+=c;
+
+});
+
+let gpa=crd===0?0:(pts/crd).toFixed(2);
+
+let res=document.getElementById("gpaResult");
+
+res.style.display="block";
+res.textContent="GPA: "+gpa;
+
+}
+
+</script>
+
+</body>
+</html>]
