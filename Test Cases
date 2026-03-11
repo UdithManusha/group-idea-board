@@ -1,4 +1,8 @@
+(1) Not allowed to add empty ideas directly.
+(2) System is allowed to add multiple ideas
 (3) When adding a large paragraph it goes over the bounds of sticky note UI.
 (4) <b>,</b> characters make the typed ideas bold.  <script>alert("Hello")</script> does not do anything but add an empty idea.
 (5) typing two different ideas in a row creates only one sticky note UI.
 (6) after refreshing the web page the existing ideas disappear.
+(7) Rapid button clicking doesn't do anything
+(8) Web page does not properly appear on mobile devices
