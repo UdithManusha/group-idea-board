@@ -1,1 +1,3 @@
-When adding a large paragraph it goes over the bounds of sticky note UI.
+(3) When adding a large paragraph it goes over the bounds of sticky note UI.
+(4) <b>,</b> characters make the typed ideas bold.  <script>alert("Hello")</script> does not do anything but add an empty idea.
+(5)
