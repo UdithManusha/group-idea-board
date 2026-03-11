@@ -1,0 +1,27 @@
+You are improving an existing HTML, CSS, and JavaScript project called "UCSC Hub - Student Toolkit".
+
+Problem:
+The Idea Board currently loses all ideas when the page is refreshed. Ideas are only stored in the DOM and are not saved.
+
+Task:
+Update the JavaScript so that ideas persist after a page refresh using localStorage.
+
+Requirements:
+1. When a user adds an idea, it must be saved to localStorage.
+2. When the page loads, all saved ideas must be loaded from localStorage and displayed in the Idea Board.
+3. When an idea is deleted, it must also be removed from localStorage.
+4. Do NOT break the existing features:
+   - Empty input validation
+   - Duplicate idea prevention
+   - Character limit (200)
+   - Trim leading and trailing spaces
+5. Keep the existing UI and CSS unchanged.
+6. Reuse the existing sticky-note structure and random note colors.
+7. Write clean JavaScript functions such as:
+   - saveIdeas()
+   - loadIdeas()
+8. Automatically load saved ideas when the page opens.
+
+Output:
+Return the FULL updated JavaScript section only.
+Do not modify the HTML or CSS unless absolutely necessary.
