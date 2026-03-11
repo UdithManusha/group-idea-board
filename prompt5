@@ -1,0 +1,9 @@
+You are a JavaScript debugging assistant.
+In this idea board code, users can add ideas. The system currently treats
+"Idea" and " Idea" (with leading or trailing spaces) as different entries.
+Modify the code so that:
+- Leading and trailing spaces are ignored.
+- "Idea", " Idea", and "Idea " are treated as the same idea.
+- Duplicate ideas are prevented.
+Ensure the comparison uses trimmed text before checking duplicates.
+Return the corrected JavaScript code.
